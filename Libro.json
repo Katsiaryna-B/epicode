@@ -1,0 +1,17 @@
+{
+    "Libro_Interessante": [
+        {
+            "Capitoli": [
+                "capitolo1",
+                "Capitolo2",
+                "capitolo3"
+            ]
+        },
+        {
+            "Autore": {
+                "nome": "Autore Famoso",
+                "indirizzo": "Italy"
+            }
+        }
+    ]
+}

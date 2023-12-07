@@ -1,0 +1,37 @@
+{
+    "rubrica": [
+        {
+            "Title": "Sig.ra",
+            "First Name": "Katsiryna",
+            "Middle Name": "",
+            "Last Name": "Belenkaya",
+            "Mobile Phone": 3000645,
+            "E-mail Address": "katsiaryna.belenkaya@studente.com",
+            "Age": 33,
+            "eye color": "pink",
+            "country": "Belarus"
+        },
+        {
+            "Title": "Sig.ra",
+            "First Name": "Emanuela",
+            "Middle Name": "",
+            "Last Name": "Cannarella B",
+            "Mobile Phone": 3004545,
+            "E-mail Address": "emanuela.cb@studente.com",
+            "Age": 25,
+            "eye color": "blue",
+            "country": "Italy"
+        },
+        {
+            "Title": "Sig.",
+            "First Name": "Riccardo",
+            "Middle Name": "",
+            "Last Name": "Buldini",
+            "Mobile Phone": 3350645,
+            "E-mail Address": "riccardo.b@studente.com",
+            "Age": 25,
+            "eye color": "brown",
+            "country": "Italy"
+        }
+    ]
+}
