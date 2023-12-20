@@ -1,0 +1,106 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 -- create a table\
+CREATE TABLE Aeroporto (\
+    id INTEGER PRIMARY KEY,\
+    Citta TEXT NOT NULL,\
+    Nazione TEXT NOT NULL,\
+    NumPiste INTEGER\
+);\
+-- insert some values\
+INSERT INTO Aeroporto VALUES (1, 'Malpensa', 'ITA', 16);\
+INSERT INTO Aeroporto VALUES (2, 'Bergamo', 'ITA', 7);\
+INSERT INTO Aeroporto VALUES (3, 'Vilnius', 'LTU', 3);\
+INSERT INTO Aeroporto VALUES (4, 'Kaunas', 'LTU', NULL );\
+INSERT INTO Aeroporto VALUES (5, 'Mahiliou', 'BY', 2);\
+INSERT INTO Aeroporto VALUES (6, 'Minsk', 'BY', 4);\
+INSERT INTO Aeroporto VALUES (7, 'Roma', 'ITA', 20);\
+INSERT INTO Aeroporto VALUES (8, 'Bologna', 'ITA', 25);\
+INSERT INTO Aeroporto VALUES (9, 'Berlin', 'GER', 15);\
+INSERT INTO Aeroporto VALUES (10, 'Torino', 'ITA', 3);\
+-- fetch some values\
+#SELECT * FROM Aeroporto;\
+\
+CREATE TABLE VOLO (\
+    idVolo VARCHAR (5),\
+    GiornoSett TEXT,\
+    CittaPart TEXT NOT NULL,\
+    OraPart TIME NOT NULL,\
+    CittaArr TEXT NOT NULL,\
+    OraArr TIME,\
+    TipoAereo TEXT NOT NULL\
+);\
+\
+-- insert some values\
+INSERT INTO VOLO VALUES ('1bd6h', 'Lun', 'Malpensa', '12:20:00', 'Roma', '14:20:00', 'Typo1');\
+INSERT INTO VOLO VALUES ('2cff5', 'Lun', 'Malpensa', '22:40:00', 'Vilnius', '23:50:00', 'Typo2');\
+INSERT INTO VOLO VALUES ('3dh34', 'Ven', 'Vilnius', '10:30:00', 'Roma', '12:40:00', 'Typo8');\
+INSERT INTO VOLO VALUES ('AZ274', 'Mer', 'Bergamo', '08:10:00', 'Kaunas', '11:00:00', 'Typo3');\
+INSERT INTO VOLO VALUES ('5hlh7', 'Sab', 'Kaunas', '15:20:00', 'Roma', '17:35:00', 'Typo4');\
+INSERT INTO VOLO VALUES ('6hjw3', 'Sab', 'Roma', '10:20:00', 'Bologna', '13:05:00', 'Typo5');\
+INSERT INTO VOLO VALUES ('7ds8j', 'Dom', 'Bologna', '18:10:00', 'Roma', '20:20:00', 'Typo6');\
+INSERT INTO VOLO VALUES ('8ls8k', 'Dom', 'Berlin', '10:07:00', 'Roma', '13:47:00', 'Typo7');\
+INSERT INTO VOLO VALUES ('9ks6h', 'Gio', 'Berlin', '05:20:00', 'Bologna', '10:02:00', 'Typo9');\
+INSERT INTO VOLO VALUES ('10r7n', 'Ven', 'Torino', '03:10:00', 'Bergamo', '5:20:00', 'Typo10');\
+\
+-- fetch some values\
+#SELECT * FROM VOLO;\
+\
+CREATE TABLE AEREO (\
+    TipoAereo VARCHAR (10),\
+    NumPasseggeri INTEGER,\
+    QtaMerci DOUBLE\
+);\
+-- insert some values\
+INSERT INTO AEREO VALUES ('Typo1', 160, 28639);\
+INSERT INTO AEREO VALUES ('Typo2', 180, 936);\
+INSERT INTO AEREO VALUES ('Typo3', 250, 7399);\
+INSERT INTO AEREO VALUES ('Typo4', 500, 208639);\
+INSERT INTO AEREO VALUES ('Typo5', 260, 7800);\
+INSERT INTO AEREO VALUES ('Typo6', 10, 10000);\
+INSERT INTO AEREO VALUES ('Typo7', 16, 9805);\
+INSERT INTO AEREO VALUES ('Typo8', 30, 250);\
+INSERT INTO AEREO VALUES ('Typo9', 50, 1000);\
+INSERT INTO AEREO VALUES ('Typo10', 75, 1500);\
+#SELECT * FROM AEREO\
+\
+SELECT Citta FROM Aeroporto WHERE NumPiste is NULL;\
+SELECT TipoAereo FROM VOLO WHERE CittaPart = 'Torino';\
+SELECT CittaPart FROM VOLO WHERE CittaArr = 'Bologna';\
+SELECT CittaPart, CittaArr FROM VOLO WHERE idVolo = 'AZ274';\
+\
+# Cerca voli di weekend non da Roma\
+SELECT idVolo FROM VOLO WHERE GiornoSett IN ('Sab','Dom') AND CittaPart != 'Roma';\
+\
+# Cerca voli con partenza dalle citta Be... \
+#SELECT idVolo FROM VOLO WHERE CittaPart LIKE 'Be%';\
+\
+#Quale tipo aereo trasporta quantita merci massimale\
+SELECT TipoAereo FROM AEREO WHERE QtaMerci = (SELECT MAX(QtaMerci) AS QtaMAX FROM AEREO);\
+\
+# Quanti voli partono da Malpensa\
+SELECT COUNT(idVolo) FROM VOLO WHERE CittaPart = 'Malpensa';\
+\
+# Quali sono i voli che partono dal'Italia\
+#SELECT idVolo from Aeroporto, VOLO where citta=CittaPart AND Nazione='ITA';\
+\
+# Quali sono i voli che non partono dal'Italia\
+#SELECT idVolo from Aeroporto, VOLO where citta=CittaPart AND Nazione!='ITA';\
+\
+# Voli nel weekend non dal Italia \
+#SELECT idVolo FROM Aeroporto, VOLO WHERE citta=CittaPart AND GiornoSett IN ('Sab','Dom') AND Nazione != 'ITA';\
+\
+# Quali tipi di aerei possono portare tra i 150 e i 200 passeggeri e possono portare la quantit\'e0 di merce minore?\
+#SELECT TipoAereo FROM AEREO WHERE NumPasseggeri between 150 and 200 ORDER BY QtaMerci ASC LIMIT 1;\
+\
+# Nazioni da cui i voli partono Venerdi\
+# SELECT Nazione FROM Aeroporto, VOLO WHERE Citta=CittaPart AND GiornoSett = 'Ven';\
+\
+\
+\
+}
