@@ -240,9 +240,12 @@ LIMIT 5;
 #Per trovare top 5 clienti che hanno comprato piu articoli 
 SELECT id_cliente, SUM(v2.quantita) as TotaleNumeroArticoliAcquistati
 FROM clienti c
-JOIN (SELECT v.id_transazione, prezzo_finale, quantita, prezzo_finale*quantita as CostoTotaleTransazione
+JOIN (
+    SELECT v.id_transazione, quantita
     FROM Vendite v 
-    JOIN dettagli_vendite d ON v.id_transazione=d.id_transazione) v2 ON c.id_vendita=v2.id_transazione
+    JOIN dettagli_vendite d 
+    ON v.id_transazione=d.id_transazione) v2 
+ON c.id_vendita=v2.id_transazione
 GROUP BY c.id_cliente
 ORDER BY SUM(quantita) DESC
 LIMIT 5;
@@ -250,9 +253,12 @@ LIMIT 5;
 #Per trovare top 5 clienti che hanno speso di piu
 SELECT id_cliente, SUM(v2.CostoTotaleTransazione) as TotaleSpesa
 FROM clienti c
-JOIN (SELECT v.id_transazione, prezzo_finale*quantita as CostoTotaleTransazione
+JOIN (
+    SELECT v.id_transazione, prezzo_finale*quantita as CostoTotaleTransazione
     FROM Vendite v 
-    JOIN dettagli_vendite d ON v.id_transazione=d.id_transazione) v2 ON c.id_vendita=v2.id_transazione
+    JOIN dettagli_vendite d 
+    ON v.id_transazione=d.id_transazione) v2 
+ON c.id_vendita=v2.id_transazione
 GROUP BY c.id_cliente
 ORDER BY SUM(v2.CostoTotaleTransazione) DESC
 LIMIT 5;
@@ -260,9 +266,12 @@ LIMIT 5;
 #Per trovare vendite totali per ogni anno
 SELECT YEAR(data_acquisto), SUM(v2.CostoTotaleTransazione) as TotaleSpesa
 FROM Vendite v
-JOIN (SELECT v.id_transazione, data_acquisto, prezzo_finale*quantita as CostoTotaleTransazione
+JOIN (
+    SELECT v.id_transazione, data_acquisto, prezzo_finale*quantita as CostoTotaleTransazione
     FROM Vendite v 
-    JOIN dettagli_vendite d ON v.id_transazione=d.id_transazione) v2 ON v.id_transazione=v2.id_transazione
+    JOIN dettagli_vendite d 
+    ON v.id_transazione=d.id_transazione) v2 
+ON v.id_transazione=v2.id_transazione
 GROUP BY YEAR(data_acquisto)
 ORDER BY YEAR(data_acquisto) DESC;
 
